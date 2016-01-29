@@ -52,9 +52,8 @@ public class RecycleVAdapter extends RecyclerView.Adapter<RecycleVAdapter.EventV
 
     @Override
     public void onBindViewHolder(EventViewHolder eventViewHolder, int i) {
-        String[] viewsText = Utils.processDate(eventMetaDataList.get(i).eventInfo);
-        eventViewHolder.eventName.setText(viewsText[0]);
-        eventViewHolder.eventDate.setText(viewsText[1]);
+        eventViewHolder.eventName.setText(eventMetaDataList.get(i).eventName.toString());
+        eventViewHolder.eventDate.setText(eventMetaDataList.get(i).eventDate.toString());
         eventViewHolder.checkBox.setTag(i);
         eventViewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

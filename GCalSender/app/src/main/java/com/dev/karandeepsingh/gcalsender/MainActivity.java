@@ -106,9 +106,8 @@ public class MainActivity extends Activity {
                         Toast.makeText(getApplicationContext(), "Enter some email id/s", Toast.LENGTH_LONG).show();
                     } else {
                         for (Map.Entry<Integer, EventMetaData> entry : selectedEvents.entrySet()) {
-                            emailBodyTextArr = Utils.processDate(entry.getValue().eventInfo);
-                            builder.append(emailBodyTextArr[0] + " on ");
-                            builder.append(emailBodyTextArr[1] + '\n');
+                            builder.append(entry.getValue().eventName + " on ");
+                            builder.append(entry.getValue().eventDate + '\n');
                         }
                         arr[0] = emails;
                         shareToGMail(arr, "Notification from GCalSender selected Events", builder.toString());
@@ -212,7 +211,8 @@ public class MainActivity extends Activity {
                 } else {
                     eventMetaDataList.clear();
                     for (int count = 0; count < dataStrings.size(); count++) {
-                        EventMetaData metadata = new EventMetaData(dataStrings.get(count));
+                        String eventInfo[]=Utils.processDate(dataStrings.get(count).toString());
+                        EventMetaData metadata = new EventMetaData(eventInfo[0],eventInfo[1]);
                         eventMetaDataList.add(metadata);
                     }
                     adapter.setMetadataArray(eventMetaDataList);
@@ -276,7 +276,7 @@ public class MainActivity extends Activity {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, email);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Events Scheduled are as follows :- " + '\n' + content);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Events Scheduled are as follows :- " + '\n' +'\n' + content);
         final PackageManager pManager = getApplicationContext().getPackageManager();
         final List<ResolveInfo> matches = pManager.queryIntentActivities(emailIntent, 0);
         ResolveInfo best = null;
